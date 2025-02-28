@@ -169,7 +169,7 @@ static int parse_request_headers(request_rec *r)
 
     apr_table_do(count_headers, &h, r->headers_in, NULL);
 
-    h.count += count_string(r->the_request) + 1 + 1 + 1;
+    h.count += count_string(r->the_request) + 1 + 1 + 1 + 1;
     h.log = apr_palloc(r->pool, h.count);
     h.pos = h.log;
     h.end = h.log + h.count;
@@ -180,11 +180,10 @@ static int parse_request_headers(request_rec *r)
 
     ap_assert(h.pos < h.end);
     *h.pos++ = '\n';
+    *h.pos++ = '0';
 
-    n = h.count - 1;
     char *var = "HTTP_HEADERS_ALL";
     apr_table_setn(env, var, h.log);
-    ap_assert(rv == APR_SUCCESS && n == h.count - 1);
 
     return OK;
 }
