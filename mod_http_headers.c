@@ -180,7 +180,7 @@ static int parse_request_headers(request_rec *r)
 
     ap_assert(h.pos < h.end);
     *h.pos++ = '\n';
-    *h.pos++ = '0';
+    *h.pos++ = '\0';
 
     char *var = "HTTP_HEADERS_ALL";
     apr_table_setn(env, var, h.log);
